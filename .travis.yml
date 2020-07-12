@@ -2,3 +2,8 @@ language: python
 
 python:
    - "3.8"
+install:
+  - pip install selenium
+  - pip install bs4
+  - pip install openpyxl
+  - pip install smtplib
