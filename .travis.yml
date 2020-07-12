@@ -2,7 +2,3 @@ language: python
 
 python:
    - "3.8"
-before_script:
-  # Selenium server
-  - "wget http://selenium-release.storage.googleapis.com/2.45/selenium-server-standalone-2.45.0.jar" - # download selenium-server
-  - sleep 20 # give
