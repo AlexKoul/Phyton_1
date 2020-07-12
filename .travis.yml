@@ -6,4 +6,5 @@ install:
   - 'pip install selenium'
   - 'pip install bs4'
   - 'pip install openpyxl'
-  - 'wget https://chromedriver.storage.googleapis.com/index.html?path=84.0.4147.30/chromedriver_linux64.zip'
+addons:
+  chrome: stable
