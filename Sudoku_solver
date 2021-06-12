@@ -1,0 +1,64 @@
+def sudoku(puzzle):
+    from pprint import pprint
+    puzz1 = [0, 1, 2]
+    puzz2 = [3, 4, 5]
+    puzz3 = [6, 7, 8]
+    puzzles = [puzz1,puzz2, puzz3]
+    arr_for_work = [[None for i in range(9)]for j in range(9)]
+    for i in range(9):#по вертикали
+        for j in range(9):#по горизонтали
+        
+            if puzzle[i][j] == 0:
+                arr = []#массив куда складывают тройки в которых находится 0
+                set_from_arr = []
+                arr_choix = {1, 2, 3, 4, 5, 6, 7, 8, 9}#начальный массив из которого удаляются цифры
+                for k in puzzles:
+                    if i in k:
+                        arr.append(k)#вычисляем в каких третях находится 0
+                for l in puzzles:
+                    if j in l:
+                        arr.append(l)
+                for x in arr[0]:#собираем цифры из 1/9 части
+                    for y in arr[1]:
+                        set_from_arr.append(puzzle[x][y])
+                sss1 = set([elem for elem in puzzle[i]])#цыфры по горизонтали
+                sss2 = set([puzzle[i][j] for i in range(9)])#цифры по вертикали
+                choice_arr = arr_choix - set(set_from_arr) - sss1 - sss2#оставляем только свободные цифры
+                arr_for_work[i][j] = list(choice_arr)
+    i = 0
+    j = 0
+
+    while i < 9:#по вертикали ищем там где длина равна 1
+        while j < 9:#по горизонтали
+        
+            if type(arr_for_work[i][j]) == list and len(arr_for_work[i][j]) == 1:#определяем единичный список
+                arr_for_work[i][j] = arr_for_work[i][j][0]#сделали из списка число на этом месте
+                arr_3na3 = []
+                for k in puzzles:
+                    if i in k:
+                        arr_3na3.append(k)#вычисляем в каких третях находится единичный лист
+                for l in puzzles:
+                    if j in l:
+                        arr_3na3.append(l)
+                for elem in arr_for_work[i]:#вынимает элемент из всех списков в строке по горизонтали
+                    if type(elem) == list and arr_for_work[i][j] in elem:
+                        elem.remove(arr_for_work[i][j])
+                cifra = arr_for_work[i][j]#вынимаемая цифра присвоена новой переменной
+                for m in range(9):#вынимает элемент из всех списков в строке по вертикали
+                    if type(arr_for_work[m][j]) == list and cifra in arr_for_work[m][j]:
+                        arr_for_work[m][j].remove(cifra)
+                for x in arr_3na3[0]:
+                    for y in arr_3na3[1]:#вынимаем все цыфры из квадрата цифры
+                        if type(arr_for_work[x][y]) == list and cifra in arr_for_work[x][y]:
+                            arr_for_work[x][y].remove(cifra)
+                i = 0
+                j = 0
+                continue
+            j = j + 1
+        i = i + 1
+        j = 0
+    for i in range(9):#по вертикали
+        for j in range(9):
+            if puzzle[i][j] == 0:
+                puzzle[i][j] = arr_for_work[i][j]
+    return puzzle
